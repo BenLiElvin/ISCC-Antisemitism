@@ -14,6 +14,7 @@ library(irr)
 library(readr)
 ```
 
+The following demonstrates the difference between results from Krippendorfs Alpha and ICC doing an agreement test.
 ```{r}
 options(scipen=999)
 
@@ -33,5 +34,9 @@ experts = full_join(gunther, jenna, na_matches = "na")
 experts = experts[,-1]
 experts.t = t(experts)
 kripp.alpha(experts.t, method = "ordinal")
-icc((experts), type = "agreement")
+
+n.experts = experts
+n.experts$gunther = as.numeric(n.experts$gunther)
+n.experts$jenna = as.numeric(n.experts$jenna)
+icc(n.experts, model = "twoway", type = "agreement")
 ```
