@@ -11,22 +11,25 @@ library(tidyr)
 library(dplyr)
 library(lpSolve)
 library(irr)
+library(readr)
 ```
 
 ```{r}
 options(scipen=999)
-gunther = read_delim("pre discussion expert group annotation/pre-gunther-Jews2019.rep2.csv", 
-     ";", escape_double = FALSE, col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
-         "2", "3", "4", "5"))), trim_ws = TRUE)
-damieh = read_delim("pre discussion expert group annotation/pre-damieh-Jews2019.rep2.csv", 
-    ";", escape_double = FALSE, col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
-        "2", "3", "4", "5"))), trim_ws = TRUE)
+
+gunther <- read_csv("pre discussion expert group annotation/pre-gunther-Jews2020Jan-Apr.rep1.csv", 
+    col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
+        "2", "3", "4", "5"))))
+jenna <- read_csv("pre discussion expert group annotation/pre-Jenna-Jews2020Jan-Apr.rep1.csv", 
+    col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
+        "2", "3", "4", "5"))))
+
 
 gunther = data.frame(gunther[,c(1, 8)])
 gunther = rename(gunther, gunther = Antisemitism.Rating)
-damieh = data.frame(damieh[,c(1, 8)])
-damieh = rename(damieh, damieh = Antisemitism.Rating)
-experts = full_join(gunther, damieh, na_matches = "na")
+jenna = data.frame(jenna[,c(1, 8)])
+jenna = rename(jenna, jenna = Antisemitism.Rating)
+experts = full_join(gunther, jenna, na_matches = "na")
 experts = experts[,-1]
 experts.t = t(experts)
 kripp.alpha(experts.t, method = "ordinal")
