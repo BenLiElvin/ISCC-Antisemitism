@@ -14,6 +14,7 @@ library(irr)
 ```
 
 ```{r}
+options(scipen=999)
 gunther = read_delim("pre discussion expert group annotation/pre-gunther-Jews2019.rep2.csv", 
      ";", escape_double = FALSE, col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
          "2", "3", "4", "5"))), trim_ws = TRUE)
@@ -21,9 +22,9 @@ damieh = read_delim("pre discussion expert group annotation/pre-damieh-Jews2019.
     ";", escape_double = FALSE, col_types = cols(`Antisemitism Rating` = col_factor(levels = c("1", 
         "2", "3", "4", "5"))), trim_ws = TRUE)
 
-gunther = data.frame(gunther[,c(1, 2, 8)])
+gunther = data.frame(gunther[,c(1, 8)])
 gunther = rename(gunther, gunther = Antisemitism.Rating)
-damieh = data.frame(damieh[,c(1, 2, 8)])
+damieh = data.frame(damieh[,c(1, 8)])
 damieh = rename(damieh, damieh = Antisemitism.Rating)
 experts = full_join(gunther, damieh, na_matches = "na")
 experts = experts[,-1]
